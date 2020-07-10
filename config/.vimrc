@@ -81,11 +81,11 @@ highlight Pmenu guifg=blue guibg=white
 highlight Normal guibg=black
 
 " remove trailing spaces
-autocmd BufWritePre * %s/\s\+$//e
+autocmd InsertLeave * %s/\s\+$//e
 highlight ExtraWhitespace ctermbg=black guibg=black 
 match ExtraWhitespace /\s\+$/
 
-inoremap {<Enter> {<CR>}<Esc>ko
+inoremap {<Enter> {<Enter>}<Esc>ko
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
 
