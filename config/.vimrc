@@ -86,11 +86,18 @@ let g:rehash256 = 1
 
 " remove trailing spaces
 autocmd InsertLeave * %s/\s\+$//e
+<<<<<<< HEAD
 highlight ExtraWhitespace ctermbg=NONE guibg=NONE 
 match ExtraWhitespace /\s\+$/
 
 inoremap {<Enter> {<Enter>}<Esc>ko
 inoremap {<Space> {}<Esc>i
+=======
+highlight ExtraWhitespace ctermbg=black guibg=black 
+match ExtraWhitespace /\s\+$/
+
+inoremap {<Enter> {<Enter>}<Esc>ko
+>>>>>>> 93465dcd315cebdede6ef36c2302631a9fc3c3e2
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
 
