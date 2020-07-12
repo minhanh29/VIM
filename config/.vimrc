@@ -9,14 +9,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'agude/vim-eldar'
 
 Plug 'lyuts/vim-rtags'
-
 Plug 'sheerun/vim-polyglot'
-
 Plug 'morhetz/gruvbox'
 
 Plug 'vim-airline/vim-airline'
@@ -42,24 +38,6 @@ let g:go_highlight_format_strings = 1
 let g:go_highlight_variable_declarations = 1
 let g:go_auto_sameids = 1
 
-" Disable function highlighting (affects both C and C++ files)
-let g:cpp_no_function_highlight = 1
-
-" Put all standard C and C++ keywords under Vim's highlight group 'Statement'
-" (affects both C and C++ files)
-let g:cpp_simple_highlight = 1
-
-" Enable highlighting of named requirements (C++20 library concepts)
-let g:cpp_named_requirements_highlight = 1
-let c_no_curly_error = 1
-
-" Java
-let java_highlight_functions = 1
-
-" molokai theme
-"let g:molokai_original = 1
-let g:rehash256 = 1
-
 
 syntax on
 
@@ -77,19 +55,46 @@ set guifont=Monaco:h12
 
 colorscheme molokai
 set background=dark
-highlight Pmenu guifg=blue guibg=white
-highlight Normal guibg=black
+"let g:gruvbox_contrast='hard'
+highlight Pmenu guifg=blue guibg=white ctermfg=blue ctermbg=white
+"highlight Normal guibg=black ctermbg=black
+
+" Disable function highlighting (affects both C and C++ files)
+"let g:cpp_no_function_highlight = 1
+
+" Put all standard C and C++ keywords under Vim's highlight group 'Statement'
+" (affects both C and C++ files)
+let g:cpp_simple_highlight = 1
+
+" Enable highlighting of named requirements (C++20 library concepts)
+let g:cpp_named_requirements_highlight = 1
+let c_no_curly_error = 1
+
+" Java
+let java_highlight_functions = 1
+let java_highlight_all = 1
+let java_highlight_java = 1
+let java_highlight_java_lang = 1
+let java_highlight_debug = 1
+
+
+" molokai theme
+let g:molokai_original = 1
+let g:rehash256 = 1
+
+
 
 " remove trailing spaces
-autocmd BufWritePre * %s/\s\+$//e
-highlight ExtraWhitespace ctermbg=black guibg=black 
+autocmd InsertLeave * %s/\s\+$//e
+highlight ExtraWhitespace ctermbg=NONE guibg=NONE 
 match ExtraWhitespace /\s\+$/
 
-inoremap {<Enter> {<CR>}<Esc>ko
+inoremap {<Enter> {<Enter>}<Esc>ko
+inoremap {<Space> {}<Esc>i
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
 
-"autocmd BufRead,TextChangedI *.java :SemanticHighlight
 
 "open nerd tree
 nnoremap <space>pv :vs<bar>:Ex<CR>
+
