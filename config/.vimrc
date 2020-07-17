@@ -10,16 +10,22 @@ Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'jremmen/vim-ripgrep'
 
 Plug 'lyuts/vim-rtags'
 Plug 'sheerun/vim-polyglot'
 Plug 'morhetz/gruvbox'
+Plug 'ayu-theme/ayu-vim'
 
 Plug 'vim-airline/vim-airline'
 "Plug 'jaxbot/semantic-highlight.vim'
 
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 call plug#end()
+
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
 
 
 " --- vim go (polyglot) settings.
@@ -50,17 +56,17 @@ set incsearch
 
 set wrap       "Wrap lines
 set linebreak    "Wrap lines at convenient points
-set guifont=Monaco:h12
+set guifont=Monaco:h13
 
-
-colorscheme molokai
+set termguicolors
+"let ayucolor="light"  " for light version of theme
+"let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 set background=dark
-"let g:gruvbox_contrast='hard'
-highlight Pmenu guifg=blue guibg=white ctermfg=blue ctermbg=white
+"highlight Pmenu guifg=blue guibg=white ctermfg=blue ctermbg=white
 "highlight Normal guibg=black ctermbg=black
 
-" Disable function highlighting (affects both C and C++ files)
-"let g:cpp_no_function_highlight = 1
 
 " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
 " (affects both C and C++ files)
@@ -79,14 +85,14 @@ let java_highlight_debug = 1
 
 
 " molokai theme
-let g:molokai_original = 1
-let g:rehash256 = 1
+"let g:molokai_original = 1
+"let g:rehash256 = 1
 
 
 
 " remove trailing spaces
-autocmd InsertLeave * %s/\s\+$//e
-highlight ExtraWhitespace ctermbg=NONE guibg=NONE 
+autocmd BufWritePre * %s/\s\+$//e
+highlight ExtraWhitespace ctermbg=NONE guibg=#1B1D1E
 match ExtraWhitespace /\s\+$/
 
 inoremap {<Enter> {<Enter>}<Esc>ko
@@ -94,12 +100,13 @@ inoremap {<Space> {}<Esc>i
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
 
+" switch between absolute and relative number
+nnoremap <Space>na :set norelativenumber<Enter>
+nnoremap <Space>nr :set relativenumber<Enter>
+
 
 "open nerd tree
 nnoremap <space>pv :vs<bar>:Ex<CR>
 
 "copy and paste to clipboard
 vnoremap <C-c> "*y :let @+=@*<CR>
-
-
-
