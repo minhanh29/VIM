@@ -56,7 +56,6 @@ set incsearch
 
 set wrap       "Wrap lines
 set linebreak    "Wrap lines at convenient points
-" Test Git
 set guifont=Monaco:h12
 
 set termguicolors
