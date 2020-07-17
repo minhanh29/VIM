@@ -56,7 +56,7 @@ set incsearch
 
 set wrap       "Wrap lines
 set linebreak    "Wrap lines at convenient points
-set guifont=Monaco:h13
+set guifont=Monaco:h12
 
 set termguicolors
 "let ayucolor="light"  " for light version of theme
