@@ -56,8 +56,8 @@ set incsearch
 
 set wrap       "Wrap lines
 set linebreak    "Wrap lines at convenient points
-set guifont=Monaco:h11
 " Test Git
+set guifont=Monaco:h12
 
 set termguicolors
 "let ayucolor="light"  " for light version of theme
