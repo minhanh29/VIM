@@ -1,5 +1,5 @@
 call plug#begin()
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim'
 Plug 'scrooloose/nerdtree'
 "Plug 'tsony-tsonev/nerdtree-git-plugin'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -8,17 +8,23 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jremmen/vim-ripgrep'
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'xavierd/clang_complete'	
+
+Plug 'nvie/vim-flake8'	" for python
+Plug 'dense-analysis/ale'
+
+Plug 'ervandew/supertab'
 
 Plug 'lyuts/vim-rtags'
 Plug 'sheerun/vim-polyglot'
-Plug 'morhetz/gruvbox'
+"Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
 
 Plug 'vim-airline/vim-airline'
-"Plug 'jaxbot/semantic-highlight.vim'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }  "Usage:  :Prettier
 
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 call plug#end()
@@ -50,31 +56,48 @@ syntax on
 set smarttab
 set cindent
 set tabstop=4
+set number
 set relativenumber
 set noswapfile
 set incsearch
+set mouse=a
+
 
 set wrap       "Wrap lines
 set linebreak    "Wrap lines at convenient points
-set guifont=Monaco:h12
+set guifont=Hack\ Nerd\ Font:h13
+set encoding=UTF-8
+let g:airline_powerline_fonts = 1
 
-set termguicolors
-"let ayucolor="light"  " for light version of theme
-"let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+
+if has('gui_running')
+	set termguicolors
+	"let ayucolor="light"  " for light version of theme
+	let ayucolor="mirage" " for mirage version of theme
+	"let ayucolor="dark"   " for dark version of theme
+	colorscheme ayu
+else
+	" molokai theme
+	colorscheme molokai
+	let g:molokai_original = 1
+	let g:rehash256 = 1
+endif
+
+
 set background=dark
 "highlight Pmenu guifg=blue guibg=white ctermfg=blue ctermbg=white
-"highlight Normal guibg=black ctermbg=black
+"highlight Normal guibg=#23262b "ctermbg=black
 
 
 " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
 " (affects both C and C++ files)
 let g:cpp_simple_highlight = 1
 
+
 " Enable highlighting of named requirements (C++20 library concepts)
 let g:cpp_named_requirements_highlight = 1
 let c_no_curly_error = 1
+
 
 " Java
 let java_highlight_functions = 1
@@ -84,21 +107,18 @@ let java_highlight_java_lang = 1
 let java_highlight_debug = 1
 
 
-" molokai theme
-"let g:molokai_original = 1
-"let g:rehash256 = 1
-
-
-
 " remove trailing spaces
 autocmd BufWritePre * %s/\s\+$//e
 highlight ExtraWhitespace ctermbg=NONE guibg=#1B1D1E
 match ExtraWhitespace /\s\+$/
 
+
+" mapping
 inoremap {<Enter> {<Enter>}<Esc>ko
 inoremap {<Space> {}<Esc>i
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
+
 
 " switch between absolute and relative number
 nnoremap <Space>na :set norelativenumber<Enter>
@@ -107,6 +127,34 @@ nnoremap <Space>nr :set relativenumber<Enter>
 
 "open nerd tree
 nnoremap <space>pv :vs<bar>:Ex<CR>
+nnoremap <space>nt :NERDTree<CR>
+
 
 "copy and paste to clipboard
 vnoremap <C-c> "*y :let @+=@*<CR>
+
+
+"super tab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+
+" Kite
+autocmd FileType python let b:coc_suggest_disable = 1
+set completeopt-=preview   " do not show the preview window
+set completeopt+=menuone   " show the popup menu even when there is only 1 match
+set completeopt+=noinsert  " don't insert any text until user chooses a match
+set completeopt-=longest   " don't insert the longest common text
+
+
+" Omnicomplete for C#
+let g:OmniSharp_server_use_mono = 1
+
+" clang complete for C++
+ let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
+
+" language server for javascript
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['javascript-typescript-stdio']
+    \ }
+
