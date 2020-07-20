@@ -12,6 +12,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'jremmen/vim-ripgrep'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'xavierd/clang_complete'	
+Plug 'jiangmiao/auto-pairs'
 
 Plug 'nvie/vim-flake8'	" for python
 Plug 'dense-analysis/ale'
@@ -114,8 +115,8 @@ match ExtraWhitespace /\s\+$/
 
 
 " mapping
-inoremap {<Enter> {<Enter>}<Esc>ko
-inoremap {<Space> {}<Esc>i
+"inoremap {<Enter> {<Enter>}<Esc>ko
+"inoremap {<Space> {}<Esc>i
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
 
