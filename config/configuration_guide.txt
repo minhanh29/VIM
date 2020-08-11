@@ -4,12 +4,12 @@ ttps://medium.com/@gillicarmon/create-color-scheme-for-vim-335e842e29ea
 ## vimrc:
 https://learnvimscriptthehardway.stevelosh.com/chapters/07.html#editing-your-vimrc
 
-Minh Anh is here
+Minh An is here
 
 Hello
 
-To Nhi
+To Nha
 
 I love you
 
-Something 
+Somethin
