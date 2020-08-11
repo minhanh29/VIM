@@ -4,12 +4,3 @@ ttps://medium.com/@gillicarmon/create-color-scheme-for-vim-335e842e29ea
 ## vimrc:
 https://learnvimscriptthehardway.stevelosh.com/chapters/07.html#editing-your-vimrc
 
-Bao Ngoc is here
-
-Hello
-
-Bao Ngoc
-
-I love you
-
-Something else
