@@ -1,6 +1,8 @@
 ## colorscheme:
 ttps://medium.com/@gillicarmon/create-color-scheme-for-vim-335e842e29ea
 
-## vimrc:
+## vimr:
 https://learnvimscriptthehardway.stevelosh.com/chapters/07.html#editing-your-vimrc
+
+Minh Anh
 

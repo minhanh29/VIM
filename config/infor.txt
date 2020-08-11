@@ -27,7 +27,7 @@ C++ .ccls file:
 
 ccls: cannot find extentions.js - at Pipe.<anonymous>
 1. make symbolic links:
-cd /Users/minhanh/.config/coc/extensions/node_modules/coc-ccls 
+cd /Users/minhanh/.config/coc/extensions/node_modules/coc-ccls
 ln -s /Users/minhanh/.config/coc/extensions/node_modules/coc-ccls/lib lib
 
 watchman: permission denied
