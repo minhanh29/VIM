@@ -4,4 +4,4 @@ ttps://medium.com/@gillicarmon/create-color-scheme-for-vim-335e842e29ea
 ## vimrc:
 https://learnvimscriptthehardway.stevelosh.com/chapters/07.html#editing-your-vimrc
 
-I added something else
+I added something new
