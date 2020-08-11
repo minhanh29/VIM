@@ -6,3 +6,5 @@ https://learnvimscriptthehardway.stevelosh.com/chapters/07.html#editing-your-vim
 
 To Nhi
 I added something new
+
+This is something else
