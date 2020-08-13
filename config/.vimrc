@@ -31,6 +31,7 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }  "Usage:  :Prettier
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
 Plug 'samoshkin/vim-mergetool'  " git merge tool
+Plug 'captbaritone/better-indent-support-for-php-with-html'  " php and html indentation
 call plug#end()
 
 if executable('rg')
