@@ -1,0 +1,3 @@
+## create eslint in the root project
+eslint --init
+(choose .jason config type)
