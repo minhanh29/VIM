@@ -11,12 +11,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jremmen/vim-ripgrep'
 Plug 'OmniSharp/omnisharp-vim'
-Plug 'xavierd/clang_complete'
-Plug 'xaizek/vim-inccomplete'
+Plug 'idbrii/vim-unityengine'
+Plug 'OrangeT/vim-csharp'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'nvie/vim-flake8'	" for python
-Plug 'dense-analysis/ale'
 
 Plug 'ervandew/supertab'
 
@@ -24,6 +23,8 @@ Plug 'lyuts/vim-rtags'
 Plug 'sheerun/vim-polyglot'
 "Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
+Plug 'joshdick/onedark.vim'
+Plug 'drewtempelmeyer/palenight.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }  "Usage:  :Prettier
@@ -32,6 +33,9 @@ Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
 Plug 'samoshkin/vim-mergetool'  " git merge tool
 Plug 'captbaritone/better-indent-support-for-php-with-html'  " php and html indentation
+
+Plug 'unblevable/quick-scope'  " highlight the first character
+Plug 'tpope/vim-commentary'
 call plug#end()
 
 if executable('rg')
@@ -66,6 +70,7 @@ set relativenumber
 set noswapfile
 set incsearch
 set mouse=a
+set guicursor=n-v-c-i:block-Cursor
 "set fullscreen
 
 
@@ -85,6 +90,8 @@ if has('gui_running')
 else
 	" molokai theme
 	colorscheme molokai
+	"highlight Pmenu ctermfg=blue ctermbg=white
+	"highlight Normal guibg=black ctermbg=black
 	let g:molokai_original = 1
 	let g:rehash256 = 1
 endif
@@ -101,6 +108,8 @@ set background=dark
 "highlight Pmenu guifg=blue guibg=white ctermfg=blue ctermbg=white
 "highlight Normal guibg=#23262b "ctermbg=black
 highlight Comment gui=italic
+" highlight Cursor guifg=black guibg=yellow
+" highlight iCursor guifg=black guibg=white
 
 
 " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
@@ -143,6 +152,9 @@ nnoremap <Space>nr :set relativenumber<Enter>
 nnoremap <space>pv :vs<bar>:Ex<CR>
 nnoremap <space>nt :NERDTree<CR>
 
+" keep the selection when indenting
+vnoremap > >gv
+vnoremap < <gv
 
 "copy and paste to clipboard
 vnoremap <C-c> "*y :let @+=@*<CR>
@@ -163,6 +175,11 @@ set completeopt-=longest   " don't insert the longest common text
 
 " Omnicomplete for C#
 let g:OmniSharp_server_use_mono = 1
+let g:OmniSharp_server_stdio = 1
+" let g:ale_linters = {
+" \ 'cs': ['OmniSharp']
+" \}
+let g:OmniSharp_highlighting = 0
 
 
 " clang complete for C++
@@ -209,4 +226,10 @@ endfunction
 if &diff
 	autocmd VimEnter * wincmd r
 endif
+
+
+" quick-scope
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+highlight QuickScopePrimary guifg='#eb4034' gui=bold ctermfg=155 cterm=underline
+highlight QuickScopeSecondary guifg='#00fff7' gui=bold ctermfg=81 cterm=underline
 
