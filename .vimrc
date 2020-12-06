@@ -36,6 +36,7 @@ Plug 'captbaritone/better-indent-support-for-php-with-html'  " php and html inde
 
 Plug 'unblevable/quick-scope'  " highlight the first character
 Plug 'tpope/vim-commentary'
+Plug 'Yggdroot/indentLine'  " vertical line indentation
 call plug#end()
 
 if executable('rg')
@@ -62,9 +63,11 @@ let g:go_auto_sameids = 1
 
 syntax on
 
+set autoread
 set smarttab
 set cindent
 set tabstop=4
+set shiftwidth=4
 set number
 set relativenumber
 set noswapfile
@@ -87,6 +90,8 @@ if has('gui_running')
 	let ayucolor="mirage" " for mirage version of theme
 	"let ayucolor="dark"   " for dark version of theme
 	colorscheme ayu
+	" set transparency=2
+	" highlight Normal guibg=black ctermbg=black
 else
 	" molokai theme
 	colorscheme molokai
@@ -131,7 +136,18 @@ let java_highlight_debug = 1
 
 
 " remove trailing spaces
-autocmd BufWritePre * %s/\s\+$//e
+fun! StripTrailingWhitespace()
+    " Only strip if the b:noStripeWhitespace variable isn't set
+    if exists('b:noStripWhitespace')
+        return
+    endif
+    %s/\s\+$//e
+endfun
+
+autocmd BufWritePre * call StripTrailingWhitespace()
+autocmd BufNewFile,BufRead *.md set filetype=markdown
+autocmd FileType markdown let b:noStripWhitespace=1
+
 highlight ExtraWhitespace ctermbg=NONE guibg=#1B1D1E
 match ExtraWhitespace /\s\+$/
 
@@ -166,11 +182,11 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 
-" Kite
-set completeopt-=preview   " do not show the preview window
-set completeopt+=menuone   " show the popup menu even when there is only 1 match
-set completeopt+=noinsert  " don't insert any text until user chooses a match
-set completeopt-=longest   " don't insert the longest common text
+" " Kite
+" set completeopt-=preview   " do not show the preview window
+" set completeopt+=menuone   " show the popup menu even when there is only 1 match
+" set completeopt+=noinsert  " don't insert any text until user chooses a match
+" set completeopt-=longest   " don't insert the longest common text
 
 
 " Omnicomplete for C#
@@ -184,7 +200,6 @@ let g:OmniSharp_highlighting = 0
 
 " clang complete for C++
  let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
-
 
 " language server for javascript
 let g:LanguageClient_serverCommands = {
@@ -232,4 +247,39 @@ endif
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 highlight QuickScopePrimary guifg='#eb4034' gui=bold ctermfg=155 cterm=underline
 highlight QuickScopeSecondary guifg='#00fff7' gui=bold ctermfg=81 cterm=underline
+
+" indent line
+let g:indentLine_enabled = 1
+set conceallevel=1
+let g:indentLine_conceallevel=1
+
+" compile c/c++ program
+nnoremap <f6> <esc>:!gcc -o %:r %:t<enter>
+nnoremap <f7> <esc>:!g++ -std=c++14 -o %:r %:t<enter>
+" run c/c++
+nnoremap <f8> <esc>:!./%:r<enter>
+
+" compile java program
+nnoremap <f3> <esc>:!javac %:t<enter>
+" run java
+nnoremap <f4> <esc>:!java %:r<enter>
+
+" run python
+nnoremap <f1> <esc>:!python3 %:t<enter>
+
+let g:coc_force_debug = 1
+
+" go to definition
+function! s:GoToDefinition()
+  if CocAction('jumpDefinition')
+    return v:true
+  endif
+
+  let ret = execute("silent! normal \<C-]>")
+  if ret =~ "Error" || ret =~ "错误"
+    call searchdecl(expand('<cword>'))
+  endif
+endfunction
+
+nnoremap gd :call <SID>GoToDefinition()<CR>
 
