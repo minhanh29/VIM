@@ -1,37 +1,27 @@
 call plug#begin()
 Plug 'neoclide/coc.nvim'
 Plug 'scrooloose/nerdtree'
-"Plug 'tsony-tsonev/nerdtree-git-plugin'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
-Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jremmen/vim-ripgrep'
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'idbrii/vim-unityengine'
-Plug 'OrangeT/vim-csharp'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'nvie/vim-flake8'	" for python
 
 Plug 'ervandew/supertab'
 
-Plug 'lyuts/vim-rtags'
 Plug 'sheerun/vim-polyglot'
-"Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
-Plug 'joshdick/onedark.vim'
-Plug 'drewtempelmeyer/palenight.vim'
+Plug 'tomasr/molokai'
 
 Plug 'vim-airline/vim-airline'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }  "Usage:  :Prettier
 
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
-Plug 'samoshkin/vim-mergetool'  " git merge tool
 Plug 'captbaritone/better-indent-support-for-php-with-html'  " php and html indentation
 
 Plug 'unblevable/quick-scope'  " highlight the first character
@@ -101,30 +91,9 @@ else
 	let g:rehash256 = 1
 endif
 
-if has('gui_macvim')
-  " Press Ctrl-Tab to switch between open tabs (like browser tabs) to
-  " the right side. Ctrl-Shift-Tab goes the other way.
-  noremap <C-Tab> :tabnext<CR>
-  noremap <C-S-Tab> :tabprev<CR>
-endif
-
 
 set background=dark
-"highlight Pmenu guifg=blue guibg=white ctermfg=blue ctermbg=white
-"highlight Normal guibg=#23262b "ctermbg=black
 highlight Comment gui=italic
-" highlight Cursor guifg=black guibg=yellow
-" highlight iCursor guifg=black guibg=white
-
-
-" Put all standard C and C++ keywords under Vim's highlight group 'Statement'
-" (affects both C and C++ files)
-let g:cpp_simple_highlight = 1
-
-
-" Enable highlighting of named requirements (C++20 library concepts)
-let g:cpp_named_requirements_highlight = 1
-let c_no_curly_error = 1
 
 
 " Java
@@ -152,9 +121,6 @@ highlight ExtraWhitespace ctermbg=NONE guibg=#1B1D1E
 match ExtraWhitespace /\s\+$/
 
 
-" mapping
-"inoremap {<Enter> {<Enter>}<Esc>ko
-"inoremap {<Space> {}<Esc>i
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
 
@@ -173,74 +139,15 @@ vnoremap > >gv
 vnoremap < <gv
 
 "copy and paste to clipboard
-vnoremap <C-c> "*y :let @+=@*<CR>
+vnoremap <C-c> "+y
+vnoremap <C-v> "+gP
+vnoremap <C-x> "+x
 
 
 
 "super tab
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
-
-
-" " Kite
-" set completeopt-=preview   " do not show the preview window
-" set completeopt+=menuone   " show the popup menu even when there is only 1 match
-" set completeopt+=noinsert  " don't insert any text until user chooses a match
-" set completeopt-=longest   " don't insert the longest common text
-
-
-" Omnicomplete for C#
-let g:OmniSharp_server_use_mono = 1
-let g:OmniSharp_server_stdio = 1
-" let g:ale_linters = {
-" \ 'cs': ['OmniSharp']
-" \}
-let g:OmniSharp_highlighting = 0
-
-
-" clang complete for C++
- let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
-
-" language server for javascript
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['javascript-typescript-stdio']
-    \ }
-
-" git merge tool
-nnoremap <space>dg :diffget<CR>
-nnoremap <space>dp :diffput<CR>
-
-" Toggle merge tool
-nmap <space>mt <plug>(MergetoolToggle)
-
-"Open base-merged-remote mode
-nnoremap <space>mb :call mergetool#toggle_layout('bmr')<CR>
-"Open merged-remote mode (merged: ours)
-nnoremap <space>mr :call mergetool#toggle_layout('mr')<CR>
-
-nmap <expr> <C-Left> &diff? '<Plug>(MergetoolDiffExchangeLeft)' : '<C-Left>'
-nmap <expr> <C-Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<C-Right>'
-nmap <expr> <C-Down> &diff? '<Plug>(MergetoolDiffExchangeDown)' : '<C-Down>'
-nmap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
-
-" Extension: Diff or merge indicator
-function! AirlineDiffmergePart()
-  if get(g:, 'mergetool_in_merge_mode', 0)
-    return '↸' . s:spc . s:spc
-  endif
-
-  if &diff
-    return '↹' . s:spc . s:spc
-  endif
-
-  return ''
-endfunction
-
-
-" git difftool
-if &diff
-	autocmd VimEnter * wincmd r
-endif
 
 
 " quick-scope
@@ -282,4 +189,3 @@ function! s:GoToDefinition()
 endfunction
 
 nnoremap gd :call <SID>GoToDefinition()<CR>
-
