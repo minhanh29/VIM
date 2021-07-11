@@ -139,8 +139,11 @@ vnoremap > >gv
 vnoremap < <gv
 
 "copy and paste to clipboard
+Visual Studio 2015, 2017 and 201
 vnoremap <C-c> "+y
+nnoremap <C-v> "+gP
 vnoremap <C-v> "+gP
+inoremap <C-v> <esc>"+gP
 vnoremap <C-x> "+x
 
 
