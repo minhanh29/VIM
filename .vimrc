@@ -140,7 +140,7 @@ vnoremap < <gv
 
 "copy and paste to clipboard
 vnoremap <C-c> "+y
-vnoremap <C-v> "+gP
+nnoremap <C-v> "+gP
 vnoremap <C-x> "+x
 
 
