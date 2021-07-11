@@ -141,6 +141,8 @@ vnoremap < <gv
 "copy and paste to clipboard
 vnoremap <C-c> "+y
 nnoremap <C-v> "+gP
+vnoremap <C-v> "+gP
+inoremap <C-v> <esc>"+gP
 vnoremap <C-x> "+x
 
 
