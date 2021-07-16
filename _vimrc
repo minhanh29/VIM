@@ -139,10 +139,13 @@ vnoremap > >gv
 vnoremap < <gv
 
 "copy and paste to clipboard
-vnoremap <C-c> "+y
 nnoremap <C-v> "+gP
-vnoremap <C-v> "+gP
+cnoremap <C-v> <C-r>+
 inoremap <C-v> <esc>"+gP
+vnoremap <C-v> "+gP
+
+vnoremap <C-c> "+y
+
 vnoremap <C-x> "+x
 
 
