@@ -169,7 +169,7 @@ let g:indentLine_conceallevel=1
 nnoremap <f6> <esc>:!gcc -o %:r %:t<enter>
 nnoremap <f7> <esc>:!g++ -std=c++14 -o %:r %:t<enter>
 " run c/c++
-nnoremap <f8> <esc>:!./%:r<enter>
+nnoremap <f8> <esc>:!%:r<enter>
 
 " compile java program
 nnoremap <f3> <esc>:!javac %:t<enter>
