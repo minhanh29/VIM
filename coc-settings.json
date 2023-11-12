@@ -22,13 +22,13 @@
             }
         }
     },
-	"python.pythonPath": "python3",
+	"python.pythonPath": "/Users/minhanh/anaconda3/envs/vits/bin/python",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
-    "python.linting.jediEnabled": false,
-    "python.linting.enabled": true,
+    "python.linting.enabled": false,
 	"python.venvPath": "/Users/minhanh/anaconda3/envs",
 	"codeLens.enable": true,
+	"suggest.noselect": true,
 	"java.referencesCodeLens.enabled": true,
 	"java..ls.vmargs": "-javaagent:/usr/local/share/lombok/lombok.jar"
 }
