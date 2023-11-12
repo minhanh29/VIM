@@ -1,5 +1,6 @@
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ieeyaY/syntastic', {'branch': 'ieeyaFix'}
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
@@ -191,3 +192,20 @@ function! s:GoToDefinition()
 endfunction
 
 nnoremap gd :call <SID>GoToDefinition()<CR>
+
+let g:syntastic_check_on_open = 0   " avoid slow on start up
+let g:syntastic_python_checkers = ['flake8']
+
+let g:syntastic_cursor_column = 0 " disable to speed up navigation significantly
+
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
