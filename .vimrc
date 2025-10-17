@@ -1,30 +1,26 @@
 call plug#begin()
-Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ieeyaY/syntastic', {'branch': 'ieeyaFix'}
 Plug 'scrooloose/nerdtree'
-"Plug 'tsony-tsonev/nerdtree-git-plugin'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jremmen/vim-ripgrep'
-Plug 'OmniSharp/omnisharp-vim'
 Plug 'idbrii/vim-unityengine'
-Plug 'OrangeT/vim-csharp'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'nvie/vim-flake8'	" for python
 
-Plug 'ervandew/supertab'
-
 Plug 'lyuts/vim-rtags'
 Plug 'sheerun/vim-polyglot'
-"Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
 Plug 'joshdick/onedark.vim'
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 Plug 'vim-airline/vim-airline'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }  "Usage:  :Prettier
@@ -37,7 +33,20 @@ Plug 'captbaritone/better-indent-support-for-php-with-html'  " php and html inde
 Plug 'unblevable/quick-scope'  " highlight the first character
 Plug 'tpope/vim-commentary'
 Plug 'Yggdroot/indentLine'  " vertical line indentation
+
+" Fuzzy
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'voldikss/vim-floaterm'
+Plug 'vim-autoformat/vim-autoformat'
+
+Plug 'madox2/vim-ai', { 'branch': 'main' }
+
+
 call plug#end()
+
+
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -76,30 +85,28 @@ set mouse=a
 set guicursor=n-v-c-i:block-Cursor
 "set fullscreen
 
+" Show file options above the command line
+set wildmenu
+" Don't offer to open certain files/directories
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
+set wildignore+=*.pdf,*.psd
+set wildignore+=node_modules/*,bower_components/*
+
 
 set wrap       "Wrap lines
 set linebreak    "Wrap lines at convenient points
-set guifont=SpaceMono\ Nerd\ Font:h12
+set guifont=SpaceMono\ Nerd\ Font:h14
 set encoding=UTF-8
 let g:airline_powerline_fonts = 1
 
 
+set termguicolors
 if has('gui_running')
-	set termguicolors
-	"let ayucolor="light"  " for light version of theme
 	let ayucolor="mirage" " for mirage version of theme
-	"let ayucolor="dark"   " for dark version of theme
-	colorscheme ayu
-	" set transparency=2
-	" highlight Normal guibg=black ctermbg=black
 else
-	" molokai theme
-	colorscheme molokai
-	"highlight Pmenu ctermfg=blue ctermbg=white
-	"highlight Normal guibg=black ctermbg=black
-	let g:molokai_original = 1
-	let g:rehash256 = 1
+	let ayucolor="dark" " for mirage version of theme
 endif
+colorscheme ayu
 
 if has('gui_macvim')
   " Press Ctrl-Tab to switch between open tabs (like browser tabs) to
@@ -144,9 +151,12 @@ fun! StripTrailingWhitespace()
     %s/\s\+$//e
 endfun
 
-autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.md set filetype=markdown
+autocmd BufNewFile,BufRead *.mdx set filetype=markdown
+autocmd BufNewFile,BufRead *.txt set filetype=text
 autocmd FileType markdown let b:noStripWhitespace=1
+autocmd FileType text let b:noStripWhitespace=1
+autocmd BufWritePre * call StripTrailingWhitespace()
 
 highlight ExtraWhitespace ctermbg=NONE guibg=#1B1D1E
 match ExtraWhitespace /\s\+$/
@@ -173,13 +183,13 @@ vnoremap > >gv
 vnoremap < <gv
 
 "copy and paste to clipboard
-vnoremap <C-c> "*y :let @+=@*<CR>
+vnoremap <space>cp "*y :let @+=@*<CR>
 
 
 
 "super tab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" let g:SuperTabDefaultCompletionType = "context"
+" let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 
 " " Kite
@@ -255,7 +265,8 @@ let g:indentLine_conceallevel=1
 
 " compile c/c++ program
 nnoremap <f6> <esc>:!gcc -o %:r %:t<enter>
-nnoremap <f7> <esc>:!g++ -std=c++14 -o %:r %:t<enter>
+" nnoremap <f7> <esc>:FloatermNew! g++ -std=c++11 -o %:r %:t<enter>
+nnoremap <f7> <esc>:!g++ -std=c++11 -o %:r %:p<enter>
 " run c/c++
 nnoremap <f8> <esc>:!./%:r<enter>
 
@@ -266,6 +277,24 @@ nnoremap <f4> <esc>:!java %:r<enter>
 
 " run python
 nnoremap <f1> <esc>:!python3 %:t<enter>
+
+" java snippet
+nnoremap <space>mc iimport<space>java.util.Scanner;<enter><enter>public<space>class<space><enter>{<enter>
+			\public<space>static<space>Scanner<space>scan;<enter><enter>
+			\public<space>static<space>void<space>main(String[]<space>args)<enter>
+			\{<enter>scan<space>=<space>new<space>Scanner(System.in);<enter>
+			\int<space>t<space>=<space>scan.nextInt();<enter>
+			\for<space>(int<space>i<space>=<space>1;<space>i<space><=<space>t;<space>i++)<enter>solve(i);<enter>
+			\scan.close();
+			\<enter>}
+			\<enter><enter>public<space>static<space>void<space>solve(int<space>t)<enter>
+			\{<enter><enter>}<enter><enter>
+			\public<space>static<space>void<space>print(int<space>t,<space>String<space>result)<enter>{<enter>
+			\System.out.println("Case<space>#"<space>+<space>t<space>+<space>":<space>"<space>+<space>result);<enter>}
+			\<enter>}<esc>ggjjA
+
+" run python
+nnoremap <f2> <esc>:!python3 %:t<enter>
 
 let g:coc_force_debug = 1
 
@@ -283,3 +312,95 @@ endfunction
 
 nnoremap gd :call <SID>GoToDefinition()<CR>
 
+" disable preview window
+let g:fzf_preview_window = []
+nnoremap <C-p> :Files<CR>
+nnoremap <C-a> :Ag<CR>
+
+let mapleader=" "
+" nnoremap gd <space>d
+" set python env
+" nnoremap <space>pe :CocCommand python.setInterpreter<CR>
+" nmap <space>ac  <Plug>(coc-codeaction)
+
+" java comments
+ " autocmd FileType java let b:jcommenter_class_author='Minh Anh Nguyen'
+" autocmd FileType java let b:jcommenter_file_author='Minh Anh Nguyen'
+" autocmd FileType java source ~/.vim/autoload/jcommenter.vim
+" autocmd FileType java map <C-m> :call JCommentWriter()<CR>
+
+" floatterm
+nnoremap <space>ft :FloatermToggle<CR>
+
+" show hidden files in nerd tree
+let NERDTreeShowHidden = 1
+
+" let g:ycm_global_ycm_extra_conf = "~/.vim/plugged/YouCompleteMe/.ycm_extra_conf.py"
+let g:syntastic_check_on_open = 0   " avoid slow on start up
+let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_python_flake8_exec = "/Users/minhanh/anaconda3/envs/vits/bin/flake8"
+" let g:syntastic_python_flake8_args = "--max-line-length=132"
+
+let g:syntastic_cursor_column = 0 " disable to speed up navigation significantly
+
+" if $CONDA_PREFIX == ""
+"   let s:current_python_path=$CONDA_PYTHON_EXE
+" else
+"   let s:current_python_path=$CONDA_PREFIX.'/bin/python'
+" endif
+" call coc#config('python', {'pythonPath': s:current_python_path})
+
+" let g:jedi#environment_path = "/Users/minhanh/anaconda3/envs/vits/bin/python"
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+
+" # AI Chat
+" trigger chat
+xnoremap <leader>c :AIChat<CR>
+nnoremap <leader>c :AIChat<CR>
+
+let g:vim_ai_chat = {
+\  "provider": "openai",
+\  "options": {
+\    "model": "gpt-4.1",
+\  },
+\  "ui": {
+\    "open_chat_command": "preset_right",
+\  },
+\}
+
+let g:vim_ai_complete = {
+\  "provider": "openai",
+\  "options": {
+\    "model": "gpt-4.1",
+\  },
+\  "ui": {
+\    "open_chat_command": "preset_right",
+\  },
+\}
+
+let g:vim_ai_edit = {
+\  "provider": "openai",
+\  "options": {
+\    "model": "gpt-4.1",
+\  },
+\  "ui": {
+\    "open_chat_command": "preset_right",
+\  },
+\}
+
+
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+autocmd FileType python setlocal formatprg=black\ -q\ -
+autocmd BufWritePre *.py :Autoformat
